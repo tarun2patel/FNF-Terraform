@@ -17,10 +17,41 @@ provider "azurerm" {
   # tenant_id = "<azure_ad_tenant_id>" # Azure AD tenant ID.
 }
 
+# String type
+variable "environment" {
+  type        = string
+  description = "Environment name (e.g., dev, prod, staging)"
+  default     = "dev"
+}
+
+
+# List type
+variable "account_names" {
+  type        = list(string)
+  description = "List of allowed Azure storage accounts"
+  default     = ["techtutorials11", "techtutorials12", "techtutorials13"]
+}
+
 resource "azurerm_resource_group" "rg" {
   name     = "example-resources"
   location = "West Europe"
 }
+
+locals {
+  nsg_rules = {
+    "allow_http" = {
+      priority               = 100
+      destination_port_range = "80"
+      description           = "Allow HTTP"
+    },
+    "allow_https" = {
+      priority               = 110
+      destination_port_range = "443"
+      description           = "Allow HTTPS"
+    }
+  }
+}
+
 
 # Create Network Security Group
 resource "azurerm_network_security_group" "example" {
