@@ -17,7 +17,7 @@ provider "azurerm" {
   # tenant_id = "<azure_ad_tenant_id>" # Azure AD tenant ID.
 }
 
-resource "azurerm_resource_group" "example" {
+resource "azurerm_resource_group" "rg" {
   name     = "example-resources"
   location = "West Europe"
 }
