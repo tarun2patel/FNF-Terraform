@@ -16,3 +16,25 @@ provider "azurerm" {
   # client_secret = "<client_secret_value>" # Secret/password for the client app (consider secure alternatives).
   # tenant_id = "<azure_ad_tenant_id>" # Azure AD tenant ID.
 }
+
+resource "azurerm_resource_group" "example" {
+  name     = "example-resources"
+  location = "West Europe"
+}
+
+resource "azurerm_storage_account" "example" {
+ 
+  name                     = "techtutorial101"
+  resource_group_name      = azurerm_resource_group.example.name
+  location                 = azurerm_resource_group.example.location # implicit dependency
+  account_tier             = "Standard"
+  account_replication_type = "LRS"
+
+  tags = {
+    environment = local.common_tags.environment
+  }
+}
+
+output "storage_account_name" {
+  value = azurerm_storage_account.example.name
+}
