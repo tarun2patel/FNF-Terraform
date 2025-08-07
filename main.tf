@@ -51,15 +51,3 @@ output "security_rules" {
   value = azurerm_network_security_group.example.security_rule
 }  
 
-output "env" {
-  value = var.environment
-}
-
-
-output "demo" {
-  value = [ for count in local.nsg_rules : count.description ]
-}
-
-output "splat" {
-  value = var.account_names[1]
-}
